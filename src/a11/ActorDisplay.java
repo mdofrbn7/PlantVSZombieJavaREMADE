@@ -50,7 +50,7 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 	 * @param rowPixels the number of pixels that this panel is high
 	 */
 	public ActorDisplay(int colPixels, int rowPixels) {
-		setPreferredSize(new Dimension(colPixels, 100+rowPixels));
+		setPreferredSize(new Dimension(colPixels, 40+rowPixels));
 		backgroundimage = Toolkit.getDefaultToolkit().createImage("src/a11/Animal-Icons/backdrop.png");
 		setBackground(Color.GRAY);
 		 displayContent = new DisplayUpperPanel();

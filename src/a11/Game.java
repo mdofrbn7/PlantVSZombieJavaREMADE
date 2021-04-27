@@ -102,19 +102,20 @@ public class Game extends JPanel implements ActionListener{
         if (rand.nextInt(100) > 98) {
         	try {
         		if(rand.nextInt(3)==1) {
-        			Thread.sleep(rand.nextInt(3000));
+//        			Thread.sleep(rand.nextInt(3000));
     				addnormalZombie(NUM_COLS - 1, rand.nextInt(NUM_ROWS));
         			
         		}else if (rand.nextInt(3)==2) {
-        			Thread.sleep(rand.nextInt(3000));
+//        			Thread.sleep(rand.nextInt(3000));
         			addBossZombie(NUM_COLS - 1, rand.nextInt(NUM_ROWS));
 
         		}else {
-        			Thread.sleep(rand.nextInt(3000));
+//        			Thread.sleep(rand.nextInt(3000));
     				addLittleZombie(NUM_COLS - 1, rand.nextInt(NUM_ROWS));
     				}
         		
-			} catch (InterruptedException e1) {
+//			} catch (InterruptedException e1) {
+        	} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -291,11 +292,11 @@ public class Game extends JPanel implements ActionListener{
 	public static void main(String[] args) {
         JFrame app = new JFrame("Plant and Zombie Test");
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        app.setResizable(false);
+        app.setResizable(false);
         app.add(new Game());
         app.pack();
         app.setVisible(true);
-        
+        app.setLocationRelativeTo(null);
         
 	}
 }

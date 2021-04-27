@@ -54,7 +54,7 @@ public class DisplayUpperPanel extends JPanel implements ActionListener, MouseMo
 		initComponents();
 	}
 	public void initComponents() {
-		
+		setLayout(new );
 	    
         scoreNum = 0;
         scoreLabel = new JLabel("UR Score: ");
