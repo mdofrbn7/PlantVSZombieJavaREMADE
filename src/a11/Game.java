@@ -41,9 +41,9 @@ public class Game extends JPanel implements ActionListener{
 	
 	private  String bossZombiebody="src/a11/Animal-Icons/Zombi5.png";
 	
-	private static  String peaShooterBody="src/a11/Animal-Icons/peaShoooter.png";
+	private static  String peaShooterBody="src/a11/Animal-Icons/peaShooter.png";
 	
-	private static  String potatoMineBody="src/a11/Animal-Icons/Sunflower.png";
+	private static  String potatoMineBody="src/a11/Animal-Icons/potatoMine.png";
 	
 	private static   String sunFlowerBody="src/a11/Animal-Icons/Sunflower.png";
 	

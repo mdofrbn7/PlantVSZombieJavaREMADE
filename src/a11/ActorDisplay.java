@@ -204,7 +204,24 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 	     
 	     if (displayContent.RadioButtonName == "sunFlower") {
 	    	 Game.addSunFlowerPlant(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
-			System.out.println("done");
+			System.out.println(displayContent.RadioButtonName);
+		}
+	     
+	     else if (displayContent.RadioButtonName == "cherry") {
+	    	 Game.addCherryBomb(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+			System.out.println(displayContent.RadioButtonName);
+		}
+	     else  if (displayContent.RadioButtonName == "PeaShooter") {
+	    	 Game.addPeaShooter(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+			System.out.println(displayContent.RadioButtonName);
+		}
+	     else  if (displayContent.RadioButtonName == "potatoMine") {
+	    	 Game.addPotatoMine(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+			System.out.println(displayContent.RadioButtonName);
+		}
+	     else if (displayContent.RadioButtonName == "WallNuts") {
+	    	 Game.addwallnuts(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+			System.out.println(displayContent.RadioButtonName);
 		}
 	     
 	    	 repaint();
