@@ -1,3 +1,4 @@
+
 package a11;
 
 import java.awt.event.ActionEvent;
@@ -31,7 +32,9 @@ public class Game extends JPanel implements ActionListener{
 	private static final int NUM_COLS = 9;
 	private static final int GRID_BUFFER_PIXELS = 50;
 	private static final int CELL_SIZE = 100;
-	private static final int STEP_TIME= 30;
+	private static final int STEP_TIME= 60;
+	
+	
 	
 	private   String normalZombibody = "src/a11/Animal-Icons/Zombi.png";
 	
@@ -49,8 +52,8 @@ public class Game extends JPanel implements ActionListener{
 	
 	private static   String wallNutsBody="src/a11/Animal-Icons/wallNut.png";
 	
-	
-	
+	private int stepCount=1;
+   
 	
 	
 	private DisplayUpperPanel displayup = new DisplayUpperPanel();
@@ -72,21 +75,6 @@ public class Game extends JPanel implements ActionListener{
 		Timer timer = new Timer(STEP_TIME, this);
 		timer.start();
 		
-	
-//		boolean isClicked = actorDisplay.getIsClicked();
-//		String name = displayup.getCheckedRadioName();
-//		System.out.println(name);
-//		if (name == "sunFlower" && isClicked) {
-//			 addwallnuts(mouseX, mouseY);
-//		}
-//		System.out.println(actorDisplay.getIsClicked());
-		
-		
-		// This adds a plant to every row
-		// TODO: replace this with your new functionality
-//		for (int i = 0; i < NUM_ROWS; i++) {
-//		    addwallnuts(0, i);
-//		}
 		
 		
 	}
@@ -101,17 +89,18 @@ public class Game extends JPanel implements ActionListener{
      
         if (rand.nextInt(100) > 98) {
         	try {
-        		if(rand.nextInt(3)==1) {
-//        			Thread.sleep(rand.nextInt(3000));
-    				addnormalZombie(NUM_COLS - 1, rand.nextInt(NUM_ROWS));
+        		int randomNum = rand.nextInt(3);
+        		if(randomNum==1) {
+        			Thread.sleep(rand.nextInt(100));
+    				addnormalZombie(NUM_COLS +2, rand.nextInt(NUM_ROWS));
         			
-        		}else if (rand.nextInt(3)==2) {
-//        			Thread.sleep(rand.nextInt(3000));
-        			addBossZombie(NUM_COLS - 1, rand.nextInt(NUM_ROWS));
+        		}else if (randomNum==2) {
+        			Thread.sleep(rand.nextInt(100));
+        			addBossZombie(NUM_COLS +2, rand.nextInt(NUM_ROWS));
 
         		}else {
-//        			Thread.sleep(rand.nextInt(3000));
-    				addLittleZombie(NUM_COLS - 1, rand.nextInt(NUM_ROWS));
+        			Thread.sleep(rand.nextInt(100));
+    				addLittleZombie(NUM_COLS+2 , rand.nextInt(NUM_ROWS));
     				}
         		
 //			} catch (InterruptedException e1) {
@@ -120,29 +109,13 @@ public class Game extends JPanel implements ActionListener{
 				e1.printStackTrace();
 			}
         	
-        	
-        	
-        	
-        
         }
+        stepCount++;
+        ActorDisplay.generateSunCoin(stepCount);
+
         
-        
-//    	
-//		int mouseX  = actorDisplay.getMouseX();
-//	int mouseY  = actorDisplay.getMouseY();
-//	 addwallnuts(mouseX, mouseY);
-//	 repaint();
-        
-//        int mouseX  = actorDisplay.getMouseX();
-//		int mouseY  = actorDisplay.getMouseY();
-//		System.out.println(mouseX+" "+mouseY);
-//		boolean isClicked = actorDisplay.getIsClicked();
-//		String name = displayup.getCheckedRadioName();
-//		System.out.println(name);
-//		System.out.println(isClicked);
-//		if (name == "sunFlower" && isClicked) {
-//			 addwallnuts(mouseX, mouseY);
-//		}
+       
+      
     }
 	
   
@@ -157,7 +130,7 @@ public class Game extends JPanel implements ActionListener{
 
 		int Planthealth = 150;
 		int coolDown=5;
-		int attackDamage = 1;
+		int attackDamage = 5;
 	    // The magic numbers below define various hardcoded plant properties
         actorDisplay.addActor(new Plant(
                 gridToPixel(col), gridToPixel(row), CELL_SIZE * 4 / 5, 
@@ -168,9 +141,9 @@ public class Game extends JPanel implements ActionListener{
 
 	public static void addPotatoMine(int col, int row) {
 
-		int Planthealth = 30;
+		int Planthealth = 40;
 		int coolDown=5;
-		int attackDamage = 10;
+		int attackDamage = 5;
 		
 	    // The magic numbers below define various hardcoded plant properties
         actorDisplay.addActor(new PotatoMine(
@@ -182,9 +155,9 @@ public class Game extends JPanel implements ActionListener{
 	
 	public static void addPeaShooter(int col, int row) {
 
-		int Planthealth = 40;
+		int Planthealth = 50;
 		int coolDown=5;
-		int attackDamage = 15;
+		int attackDamage = 10;
 		
 	    // The magic numbers below define various hardcoded plant properties
         actorDisplay.addActor(new PotatoMine(
@@ -196,9 +169,9 @@ public class Game extends JPanel implements ActionListener{
 	
 	public static void addCherryBomb(int col, int row) {
 
-		int Planthealth = 15;
+		int Planthealth = 20;
 		int coolDown=5;
-		int attackDamage = 50;
+		int attackDamage = 20;
 		
 	    // The magic numbers below define various hardcoded plant properties
         actorDisplay.addActor(new PotatoMine(
@@ -209,9 +182,9 @@ public class Game extends JPanel implements ActionListener{
 	
 	public static void addwallnuts(int col, int row) {
 
-		int Planthealth = 200;
+		int Planthealth = 150;
 		int coolDown=5;
-		int attackDamage = 0;
+		int attackDamage = 1;
 		
 	    // The magic numbers below define various hardcoded plant properties
         actorDisplay.addActor(new PotatoMine(
@@ -225,10 +198,10 @@ public class Game extends JPanel implements ActionListener{
      */
 	public  void addnormalZombie(int col, int row) {
 		row++;
-		int Zombiehealth = 100;
+		int Zombiehealth = 130;
 		int coolDown=50;
 		int speed = -2;
-		int attackDamage = 15;
+		int attackDamage = 10;
 		
 	    // The magic numbers below define various hardcoded zombie properties
         actorDisplay.addActor(new Zombie(
@@ -239,10 +212,10 @@ public class Game extends JPanel implements ActionListener{
 	
 	public void addLittleZombie(int col, int row) {
 		row++;
-			int Zombiehealth = 50;
-			int coolDown=50;
-			int speed = -5;
-			int attackDamage = 10;
+		int Zombiehealth = 100;
+		int coolDown=50;
+		int speed = -5;
+		int attackDamage = 5;
 			
 		    // The magic numbers below define various hardcoded zombie properties
 	        actorDisplay.addActor(new Zombie(
@@ -254,10 +227,10 @@ public class Game extends JPanel implements ActionListener{
 
 	public void addBossZombie(int col, int row) {
 		row++;
-		int Zombiehealth = 150;
+		int Zombiehealth = 160;
 		int coolDown=50;
 		int speed = -1;
-		int attackDamage = 50;
+		int attackDamage = 15;
 		
 	    // The magic numbers below define various hardcoded zombie properties
 	    actorDisplay.addActor(new Zombie(
@@ -265,9 +238,6 @@ public class Game extends JPanel implements ActionListener{
 				bossZombiebody,
 				Zombiehealth, coolDown, speed, attackDamage));
 	}
-	
-		
-
 	
 	
 	
@@ -297,6 +267,10 @@ public class Game extends JPanel implements ActionListener{
         app.pack();
         app.setVisible(true);
         app.setLocationRelativeTo(null);
+    
         
 	}
+
+	
+	
 }

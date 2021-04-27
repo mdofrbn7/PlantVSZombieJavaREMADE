@@ -5,13 +5,17 @@ package a11;
  * by varying the constructor parameters or by subclassing this.
  */
 public class Zombie extends Actor {
-    
+   
     /**
      * Creates a zombie. For parameter descriptions, see Actor.
      */
 	public Zombie(int xPosition, int yPosition, int size, String imgPath, int health,
 	        int coolDown, int speed, int attackDamage) {
+		
 		super(xPosition, yPosition, size, imgPath, health, coolDown, speed, attackDamage);
+		
+		
+		
 	}
 	
 	/**
@@ -29,6 +33,14 @@ public class Zombie extends Actor {
 			}
 		}
 	}
+	
+	@Override
+	protected void changeHealth(int change) {
+		// TODO Auto-generated method stub
+		
+		super.changeHealth(change);
+	}
+	
 	
 	@Override
 	public void actOn(Zombie other) {

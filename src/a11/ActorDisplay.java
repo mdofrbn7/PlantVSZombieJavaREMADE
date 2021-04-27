@@ -3,6 +3,7 @@ package a11;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,10 +15,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
+import javax.management.timer.Timer;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+
 
 
 
@@ -30,10 +36,21 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 	private static Image backgroundimage;
 	DisplayUpperPanel displayContent ;
 	
-	private JLabel mouseAxis;
+	private JLabel mouseAxis ;
     private int mouseX, mouseY;
     private boolean isMouseClicked;
+    private JLabel  scoreLabel;
+	private static JLabel sunCount;
+	private JLabel sunCountJLabel;
+	private static JLabel score;
+    public static int scoreNum =0;
+	public static int sunNum = 100;
+	public static int flowerCount=0;
+    public static final int SUN_FLOWER_PRICE= 25 , CHERRY_PRICE = 150 , PEA_SHOOTER_PRICE = 100, POTATO_MINE_PRICE = 25  ,
+    		WAL_NUT_PRICE=50;
+    private String notEnoughCoin = "You dont have enough SUN_COIN";
 //    static private Game game = new Game();
+    public static Timer t ;
 	
 
     
@@ -53,8 +70,48 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 		setPreferredSize(new Dimension(colPixels, 40+rowPixels));
 		backgroundimage = Toolkit.getDefaultToolkit().createImage("src/a11/Animal-Icons/backdrop.png");
 		setBackground(Color.GRAY);
+		t= new Timer();
+		   
+     
+        scoreLabel = new JLabel("UR Score: ");
+        scoreLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        scoreLabel.setSize(10, 20);
+        add(scoreLabel);
+        
+        
+        score = new JLabel();
+        score.setBounds(15, 25, 30, 30);
+        score.setFont(new Font("Serif", Font.BOLD, 30));
+        score.setText(""+scoreNum);
+        add(score);
+        
+       
+        sunCountJLabel = new JLabel();
+        sunCountJLabel.setToolTipText("you have "+sunNum+ " sunny-GOLD");
+        sunCountJLabel.setBackground(Color.red);
+        Image img = Toolkit.getDefaultToolkit().createImage("src/a11/Animal-Icons/sun.png");
+        ImageIcon labeliicon =new ImageIcon(DisplayUpperPanel.scaleImage(70,80 , img));
+        sunCountJLabel.setIcon(labeliicon);
+        sunCountJLabel.setSize(10, 20);
+        add(sunCountJLabel);
+       
+        
+        sunCount = new JLabel();
+        sunCount.setBackground(Color.red);
+        sunCount.setBounds(15, 25, 30, 30);
+        sunCount.setFont(new Font("Serif", Font.BOLD, 30));
+        sunCount.setText(""+sunNum);
+        add(sunCount);
+		
+		
+		
+		
 		 displayContent = new DisplayUpperPanel();
 		add(displayContent);
+		
+		
+		
+		
 		
 		
 		
@@ -66,7 +123,12 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
         add(mouseAxis);
         addMouseListener(this);
 		addMouseMotionListener(this);
+		
+		
+	
 	}
+	
+
 	
 	/**
 	 * Adds an actor to the master list of actors ONLY IF
@@ -163,9 +225,11 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 		mouseX = e.getX()-10;
         mouseY = e.getY()-10;
         mouseAxis.setText("X: "+mouseX+" \nY:"+mouseY);
+
+	
 //        mouseDragged = false;
 //        System.out.println(displayContent.RadioButtonName );
-       
+//       System.out.println(e.getID());
         e.consume();
 		
 		
@@ -195,74 +259,151 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 		 mouseX = e.getX();
 	     mouseY = e.getY();
 	     isMouseClicked =  true;
-//	     System.out.println(mouseX+" "+mouseY);
-//	     setMouseXY(mouseX,mouseY,isMouseClicked);
-	     
-	     
-//	     System.out.println(displayContent.RadioButtonName );
-	     
+		
 	     
 	     if (displayContent.RadioButtonName == "sunFlower") {
-	    	 Game.addSunFlowerPlant(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
-			System.out.println(displayContent.RadioButtonName);
+	    	 if(sunNum<25) {
+	    		 try {
+					
+					 System.out.println(notEnoughCoin);
+					 JOptionPane.showMessageDialog(null, notEnoughCoin);
+					 Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	    		
+	    		 return;
+	    	 }else {
+	    		 sunNum = sunNum - SUN_FLOWER_PRICE;
+		    	 sunCount.setText(""+sunNum);
+		    	 flowerCount++;
+		    	 Game.addSunFlowerPlant(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+
+				System.out.println(displayContent.RadioButtonName);
+	    	 }
+	    	
 		}
 	     
 	     else if (displayContent.RadioButtonName == "cherry") {
-	    	 Game.addCherryBomb(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
-			System.out.println(displayContent.RadioButtonName);
+	    	 
+	    	 if(sunNum<150) {
+	    		 try {
+						
+						 System.out.println(notEnoughCoin);
+						 JOptionPane.showMessageDialog(null, notEnoughCoin);
+						 Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	    	
+	    		 return;
+	    	 }
+	    	 else { 
+	    		 sunNum = sunNum - CHERRY_PRICE;
+		    	 sunCount.setText(""+sunNum);
+		    	 flowerCount++;
+	    		  Game.addCherryBomb(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+	    		  System.out.println(displayContent.RadioButtonName);
+	    	 }
+	    	
 		}
 	     else  if (displayContent.RadioButtonName == "PeaShooter") {
-	    	 Game.addPeaShooter(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
-			System.out.println(displayContent.RadioButtonName);
+	    	 if(sunNum<100) {
+	    		 try {
+						
+						 System.out.println(notEnoughCoin);
+						 JOptionPane.showMessageDialog(null, notEnoughCoin);
+						 Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	    		 return;
+	    	 }else {
+	    		 sunNum = sunNum - PEA_SHOOTER_PRICE;
+		    	 sunCount.setText(""+sunNum);
+		    	 flowerCount++;
+		    	 Game.addPeaShooter(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+		    	 
+				System.out.println(displayContent.RadioButtonName);
+	    	 }
+	    	 
+	    	
 		}
 	     else  if (displayContent.RadioButtonName == "potatoMine") {
-	    	 Game.addPotatoMine(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
-			System.out.println(displayContent.RadioButtonName);
+	    	
+	    	 if(sunNum<25) {
+	    		 try {
+					
+						 System.out.println(notEnoughCoin);
+						 JOptionPane.showMessageDialog(null, notEnoughCoin);
+							Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	    		 return;
+	    	 }else {
+	    		  sunNum = sunNum - POTATO_MINE_PRICE;
+	    		  sunCount.setText(""+sunNum);
+	    		  flowerCount++;
+	    		  Game.addPotatoMine(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+	    		  System.out.println(displayContent.RadioButtonName);
+	    	 }
+
+	    	
+			
 		}
 	     else if (displayContent.RadioButtonName == "WallNuts") {
-	    	 Game.addwallnuts(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
-			System.out.println(displayContent.RadioButtonName);
+	    	 if(sunNum<50) {
+	    		 try {
+						
+						 System.out.println(notEnoughCoin);
+						 JOptionPane.showMessageDialog(null, notEnoughCoin);
+						 Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	    		 return;
+	    	 }else {
+	    		 sunNum = sunNum - WAL_NUT_PRICE;
+	    		 sunCount.setText(""+sunNum);
+	    		 flowerCount++;
+	    		 
+	    		 Game.addwallnuts(Game.pixelToGrid(mouseX), Game.pixelToGrid(mouseY));
+	    		 System.out.println(displayContent.RadioButtonName);
+	    		
+	    	 }
+	    	
+	    	 
 		}
 	     
 	    	 repaint();
-	     
-		
-	     
-	     
-	     
-	     
+    
 	     
 	}
+	
+	public static void generateSunCoin(int time) {
+		if(time%100 == 0) {
+			scoreNum = flowerCount+5;
+			score.setText(""+scoreNum);
+			sunNum= sunNum + flowerCount+10;
+			sunCount.setText(""+sunNum);
+		}
+			
+	}
+	
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-//		 mouseX = e.getX();
-//	     mouseY = e.getY();
-//	     isMouseClicked =  true;
-//	     setMouseXY(mouseX,mouseY,isMouseClicked);
-//	     
-	     
-	  
-//	     System.out.println(displayContent.RadioButtonName );
-		
+
 		
 	}
-// I am trying to add mouse listener on Game class,. or game class on here. , 
-//	MouseListener getMouseListener() {
-//		return new MouseAdapter() {
-//			
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				super.mouseClicked(e);
-//				System.out.println("hu");
-//				
-//				
-//			}		
-//		};
-//		
-//	}
+
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -288,4 +429,8 @@ public class ActorDisplay extends JPanel implements ActionListener, MouseMotionL
 	
 		
 	}
+
+
+
+
 }

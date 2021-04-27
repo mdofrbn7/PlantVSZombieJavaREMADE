@@ -36,9 +36,8 @@ public class DisplayUpperPanel extends JPanel implements ActionListener, MouseMo
       private Game game;
       private JMenuBar menubar;
       private JLabel  scoreLabel, score , sunCount, sunCountJLabel;
-      private int scoreNum  , sunNum;
+      public static int scoreNum  , sunNum;
       private boolean isMouseClicked;
-      private boolean f;
       public String RadioButtonName;
       
 //      private String buttonName;
@@ -53,40 +52,11 @@ public class DisplayUpperPanel extends JPanel implements ActionListener, MouseMo
 		setBackground(Color.gray);
 		initComponents();
 	}
+	
+	
 	public void initComponents() {
-		setLayout(new );
-	    
-        scoreNum = 0;
-        scoreLabel = new JLabel("UR Score: ");
-        scoreLabel.setFont(new Font("Serif", Font.BOLD, 20));
-        scoreLabel.setSize(10, 20);
-        add(scoreLabel);
-        
-        
-        score = new JLabel();
-        score.setBounds(15, 25, 30, 30);
-        score.setFont(new Font("Serif", Font.BOLD, 30));
-        score.setText(""+scoreNum);
-        add(score);
-        
-        
-        sunNum = 100;
-        sunCountJLabel = new JLabel();
-        sunCountJLabel.setToolTipText("you have "+sunNum+ " sunny-GOLD");
-        sunCountJLabel.setBackground(Color.red);
-        Image img = Toolkit.getDefaultToolkit().createImage("src/a11/Animal-Icons/sun.png");
-        ImageIcon labeliicon =new ImageIcon(scaleImage(70,80 , img));
-        sunCountJLabel.setIcon(labeliicon);
-        sunCountJLabel.setSize(10, 20);
-        add(sunCountJLabel);
-       
-        
-        sunCount = new JLabel();
-        sunCount.setBackground(Color.red);
-        sunCount.setBounds(15, 25, 30, 30);
-        sunCount.setFont(new Font("Serif", Font.BOLD, 30));
-        sunCount.setText(""+sunNum);
-        add(sunCount);
+		
+	 
         
 		
 		
@@ -133,11 +103,6 @@ public class DisplayUpperPanel extends JPanel implements ActionListener, MouseMo
         cardWallnut.setName("WallNuts");
         cardWallnut.addActionListener(this);
         add(cardWallnut);
-        
-        
-        
-        
-		
 	}
 	
 	
@@ -152,13 +117,13 @@ public class DisplayUpperPanel extends JPanel implements ActionListener, MouseMo
 	
 	
 	
-	 public Image setImage(Image image, String path){
+	 public static Image setImage(Image image, String path){
          image = Toolkit.getDefaultToolkit().createImage(path);
          return image;
          
      }
      
-     public Image scaleImage(int width, int height, Image image){
+     public static Image scaleImage(int width, int height, Image image){
          Image scalledImage = image.getScaledInstance(width,height, image.SCALE_DEFAULT);
          return scalledImage;
          
